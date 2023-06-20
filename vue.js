@@ -7,9 +7,10 @@ createApp({
             api: 'https://countriesnow.space/api/v0.1/countries/capital',
             opzioni: [],
             randomNum: null,
-            domanda: null,
-            questions: 10,
-            correctAnswers: 0
+            questionsTotal: 5,
+            questionsNum: 5,
+            correctAnswers: 0,
+            check: false
         };
     },
     mounted() {
@@ -45,16 +46,27 @@ createApp({
             })
         },
         checkAnswer(i) {
-            this.questions--;
-            if (i == this.randomNum) {
-                this.correctAnswers++; 
-            }   
-            
-            if (this.questions > 0) {
-                // sendData
-                this.sendData();
-            } 
+            this.check = true;
+            setTimeout(() => {
+                this.questionsNum--;
+                if (i == this.randomNum) {
+                    this.correctAnswers++; 
+                }   
+                
+                if (this.questionsNum > 0) {
+                    // sendData
+                    this.sendData();
+                } 
+                this.check = false;
+            }, 2000);
         },
+        toggleBtn(i) {
+            if (i == this.randomNum && this.check) {
+                return "btn-success"
+            } else {
+                return "btn-light"
+            }
+        }
     }
 }).mount("#app");
 

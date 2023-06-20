@@ -11,25 +11,31 @@
 <body class="bg-dark"></body>
     <header>
         <nav class="bg-primary text-white p-4">
-            <h1>Quiz</h1>
+            <h1>Geography Quiz</h1>
         </nav>
     </header>
     <main>
         <div id="app">
             <div class="container bg-warning my-5 rounded">
-                <div v-show="questions > 0" class="row justify-content-center p-5">
+                <div v-show="questionsNum > 0" class="row justify-content-center p-5">
                     <div class="d-flex justify-content-between px-4">
                         <p>What's the capital city of {{ domanda }}?</p>
-                        <p>Correct answers: {{ correctAnswers }}/ 10</p>
+                        <div class="d-flex gap-2">
+                            <p>Correct answers: {{ correctAnswers && Math.round(correctAnswers * 100 / (questionsTotal - questionsNum)) }}%</p>
+                            <p>Remaining: {{ questionsNum }}</p>
+                        </div>
                     </div>
                     <div class="row">
                         <div v-for="opzione, i in opzioni" class="w-50 my-2">
-                            <button @click="checkAnswer(i)" class="btn btn-light w-100 py-3"> {{ opzione.capital }} </button> 
+                            <button @click="checkAnswer(i)" class="btn w-100 py-3" :class="toggleBtn(i)"> {{ opzione.capital }} </button> 
                         </div>
                     </div>
                 </div>
-                <div v-show="questions == 0" class="row justify-content-center p-5">
-                    <h3>Score: {{ correctAnswers }}/10</h3>
+                <div v-show="questionsNum == 0" class="row justify-content-center align-items-center p-5">
+                    <h3 class="w-auto">Score: {{ correctAnswers }}/10</h3>
+                    <a class="w-auto" href="quiz.html">
+                        <button class="btn btn-light py-3">Play Again</button>
+                    </a>
                 </div>
             </div>
         </div>
