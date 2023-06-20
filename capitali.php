@@ -1,30 +1,37 @@
 <?php
 
-$capitali_random = [
-    ['Italia' => 'Roma'],
-    ['Francia' => 'Parigi'],
-    ['Spagna' => 'Madrid'],
-    ['Germania' => 'Berlino']
-];
-
-// for ($i=0; $i < 4; $i++) { 
-//     $capitale_random = $capitali_database[rand(count($capitali_database))];
-//     array_push($capitali_random, $capitale_random);
-// }
+$opzioni = [];
 
 
-
-
-if (!empty($_POST)) {
-    if (isset($_POST['database'])) {
-        echo 'FUNZIONA';
-        $capitali_database = $_POST['database'];
-    } else {
-        echo 'NON FUNZIONA';
+if (isset($_POST['database'])) {
+    $capitali_database = ($_POST['database']['data']);
+    for ($i=0; $i < 4; $i++) { 
+        $random_num = rand(0, count($capitali_database));
+        $capitale_random = $capitali_database[$random_num];
+        if ($capitale_random['capital']) {
+            array_push($opzioni, $capitale_random);
+        } else {
+            $i--;
+        }
     }
-
 }
 
-echo json_encode($capitali_database);
+if (isset($_POST['next'])) {
+    $opzioni = [];
+
+    for ($i=0; $i < 4; $i++) { 
+        $random_num = rand(0, count($capitali_database));
+        $capitale_random = $capitali_database[$random_num];
+        if ($capitale_random['capital']) {
+            array_push($opzioni, $capitale_random);
+        } else {
+            $i--;
+        }
+    }
+}
+
+
+
+echo json_encode($opzioni);
 
 ?>
