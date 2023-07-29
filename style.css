@@ -1,0 +1,7 @@
+nav {
+    height: 6rem;
+}
+main {
+    height: calc(100dvh - 6rem);
+    background: center / cover no-repeat url(world_map.jpeg);
+}
